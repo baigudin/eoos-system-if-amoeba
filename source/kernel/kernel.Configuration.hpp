@@ -8,8 +8,7 @@
 #ifndef KERNEL_CONFIGURATION_HPP_
 #define KERNEL_CONFIGURATION_HPP_
 
-#include "os_core.h"
-#include "os_syscall.h"
+#include "os.h"
 #include "Configuration.hpp"
 
 namespace kernel

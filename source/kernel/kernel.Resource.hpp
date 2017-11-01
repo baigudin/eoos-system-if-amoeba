@@ -10,6 +10,7 @@
 
 #include "Object.hpp"
 #include "api.Kernel.hpp"
+#include "kernel.Semaphore.hpp"
 /*
 #include "kernel.Runtime.hpp"
 #include "kernel.Time.hpp"
@@ -123,13 +124,11 @@ namespace kernel
          */      
         virtual ::api::Semaphore* createSemaphore(int32 permits)
         {
-        /*
             ::api::Semaphore* res = new Semaphore(permits);
             if(res == NULL) return NULL; 
             if(res->isConstructed()) return res;       
             delete res;
             return NULL;   
-        */
         }
         
         /** 
@@ -141,13 +140,11 @@ namespace kernel
          */      
         virtual ::api::Semaphore* createSemaphore(int32 permits, bool isFair)
         {
-        /*
             ::api::Semaphore* res = new Semaphore(permits, isFair);
             if(res == NULL) return NULL; 
             if(res->isConstructed()) return res;       
             delete res;
             return NULL; 
-        */
         }        
         
         /**
