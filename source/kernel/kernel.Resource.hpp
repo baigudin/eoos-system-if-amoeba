@@ -11,14 +11,14 @@
 #include "Object.hpp"
 #include "api.Kernel.hpp"
 #include "kernel.Semaphore.hpp"
-/*
-#include "kernel.Runtime.hpp"
-#include "kernel.Time.hpp"
 #include "kernel.Mutex.hpp"
-#include "kernel.Semaphore.hpp"
-#include "kernel.Interrupt.hpp"
-#include "kernel.Scheduler.hpp"
 #include "kernel.GlobalInterrupt.hpp"
+#include "kernel.Interrupt.hpp"
+#include "kernel.Runtime.hpp"
+/*
+#include "kernel.Time.hpp"
+#include "kernel.Semaphore.hpp"
+#include "kernel.Scheduler.hpp"
 */
 namespace kernel
 {
@@ -34,13 +34,11 @@ namespace kernel
          * @param scheduler a kernel scheduler.
          */    
         Resource() : Parent(),
-            isConstructed_ (getConstruct())
-            /*
-            scheduler_     (),
-            time_          (),
+            isConstructed_ (getConstruct()),
+          //scheduler_     (),
+          //time_          (),
             global_        (),
             runtime_       ()
-            */
         {    
             setConstruct( construct() );    
         }        
@@ -67,7 +65,7 @@ namespace kernel
          */      
         virtual ::api::Runtime& getRuntime()
         {
-        //    return runtime_;
+            return runtime_;
         }
         
         /** 
@@ -97,7 +95,7 @@ namespace kernel
          */      
         virtual ::api::Toggle& getGlobalInterrupt()
         {
-        //    return global_;
+            return global_;
         }
         
         /** 
@@ -107,13 +105,11 @@ namespace kernel
          */      
         virtual ::api::Mutex* createMutex()
         {
-        /*
             ::api::Mutex* res = new Mutex();
             if(res == NULL) return NULL; 
             if(res->isConstructed()) return res;       
             delete res;
             return NULL;   
-        */
         }
         
         /** 
@@ -156,13 +152,11 @@ namespace kernel
          */
         virtual ::api::Interrupt* createInterrupt(::api::Task& handler, int32 source)
         {
-        /*
             ::api::Interrupt* res = new Interrupt(handler, source);
             if(res == NULL) return NULL; 
             if(res->isConstructed()) return res;       
             delete res;
             return NULL;       
-        */            
         }
         
     private:
@@ -175,13 +169,11 @@ namespace kernel
         bool construct()
         {
             if( not isConstructed_ ) return false;
-            /*
-            if( not scheduler_.isConstructed() ) return false;
-            if( not time_.isConstructed() ) return false;
+          //if( not scheduler_.isConstructed() ) return false;
+          //if( not time_.isConstructed() ) return false;
             if( not global_.isConstructed() ) return false;            
             if( not runtime_.isConstructed() ) return false;            
-            return true;
-            */          
+          //return true;   
             return false;              
         }        
         
@@ -218,12 +210,12 @@ namespace kernel
         /**
          * Global interrupt resource.
          */                
-        //GlobalInterrupt global_;
+        GlobalInterrupt global_;
         
         /**
          * Runtime kernel execution.
          */        
-        //Runtime runtime_;
+        Runtime runtime_;
         
     };
 }

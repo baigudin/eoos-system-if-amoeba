@@ -7,6 +7,7 @@
  */
 #include "kernel.Main.hpp" 
 #include "kernel.Configuration.hpp"
+#include "kernel.Interrupt.hpp"
 #include "kernel.Kernel.hpp"
 #include "Allocator.hpp"
 #include "Board.hpp"
@@ -31,8 +32,11 @@ namespace kernel
             if( not ::Allocator::initialize(config) ) break;        
             // Stage 2
             stage++;
-            if( not ::Board::initialize(config) ) break;           
+            if( not ::Board::initialize(config) ) break;
             // Stage 3
+            stage++;
+            if( not ::kernel::Interrupt::initialize() ) break;  
+            // Stage 4
             stage++;
             if( not ::kernel::Kernel::initialize() ) break;      
             // Stage complete
@@ -43,7 +47,8 @@ namespace kernel
         switch(stage)
         {
             default:
-            case  3: ::kernel::Kernel::deinitialize();
+            case  4: ::kernel::Kernel::deinitialize();
+            case  3: ::kernel::Interrupt::deinitialize();            
             case  2: ::Board::deinitialize();      
             case  1: ::Allocator::deinitialize();      
             case  0: break;
