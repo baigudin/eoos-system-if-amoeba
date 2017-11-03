@@ -1,7 +1,7 @@
 ; Code Composer Project File, Version 2.0 (do not modify or remove this line)
 
 [Project Settings]
-ProjectDir="D:\baigudin\git\baigudin\eoos-if-amoeba\projects\eoos.if.amoeba.lib.ti.tms320c64xplus.coff.ccstudio33\"
+ProjectDir="D:\baigudin\git\baigudin\eoos-if-amoeba\projects\eoos.if.amoeba.lib.ti.tms320c64x.coff.ccstudio33\"
 ProjectType=Library
 CPUFamily=TMS320C64XX
 Tool="Archiver"
@@ -24,10 +24,10 @@ Source="..\..\source\kernel\kernel.Main.cpp"
 Source="..\..\source\kernel\kernel.Scheduler.cpp"
 
 ["Archiver" Settings: "Debug"]
-Options=-r -o"..\..\libraries\eoos.if.amoeba.ti.tms320c64xplus.coff.debug.lib"
+Options=-r -o"..\..\libraries\eoos.if.amoeba.ti.tms320c64x.coff.debug.lib"
 
 ["Archiver" Settings: "Release"]
-Options=-r -o"..\..\libraries\eoos.if.amoeba.ti.tms320c64xplus.coff.lib"
+Options=-r -o"..\..\libraries\eoos.if.amoeba.ti.tms320c64x.coff.lib"
 
 ["Compiler" Settings: "Debug"]
 Options=-g -fr"$(Proj_dir)\Debug" -ff"$(Proj_dir)\Debug" -i"$(Proj_dir)\..\..\..\eoos\include" -i"%OS_PATH%\src\core\tms_c64xx" -mv6400 --mem_model:data=far

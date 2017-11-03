@@ -10,16 +10,14 @@
 
 #include "Object.hpp"
 #include "api.Kernel.hpp"
-#include "kernel.Semaphore.hpp"
-#include "kernel.Mutex.hpp"
-#include "kernel.GlobalInterrupt.hpp"
-#include "kernel.Interrupt.hpp"
 #include "kernel.Runtime.hpp"
-/*
 #include "kernel.Time.hpp"
+#include "kernel.Mutex.hpp"
 #include "kernel.Semaphore.hpp"
+#include "kernel.Interrupt.hpp"
 #include "kernel.Scheduler.hpp"
-*/
+#include "kernel.GlobalInterrupt.hpp"
+
 namespace kernel
 {
     class Resource : public ::Object<>, public ::api::Kernel
@@ -35,11 +33,10 @@ namespace kernel
          */    
         Resource() : Parent(),
             isConstructed_ (getConstruct()),
-          //scheduler_     (),
-          //time_          (),
+            time_          (),
             global_        (),
-            runtime_       ()
-        {    
+            runtime_       (),
+            scheduler_     (){
             setConstruct( construct() );    
         }        
   
@@ -75,7 +72,7 @@ namespace kernel
          */      
         virtual ::api::Value<int64>& getExecutionTime()
         {
-        //    return time_;
+            return time_;
         }
         
         /** 
@@ -85,7 +82,7 @@ namespace kernel
          */      
         virtual ::api::Scheduler& getScheduler()
         {
-        //    return scheduler_;
+            return scheduler_;
         }
         
         /** 
@@ -169,12 +166,11 @@ namespace kernel
         bool construct()
         {
             if( not isConstructed_ ) return false;
-          //if( not scheduler_.isConstructed() ) return false;
-          //if( not time_.isConstructed() ) return false;
+            if( not scheduler_.isConstructed() ) return false;
+            if( not time_.isConstructed() ) return false;
             if( not global_.isConstructed() ) return false;            
             if( not runtime_.isConstructed() ) return false;            
-          //return true;   
-            return false;              
+            return true;   
         }        
         
         /**
@@ -198,14 +194,9 @@ namespace kernel
         const bool& isConstructed_;        
         
         /**
-         * Kernel scheduler.
-         */
-        //Scheduler scheduler_;
-
-        /**
          * Kernel time.
          */        
-        //Time time_;
+        Time time_;
 
         /**
          * Global interrupt resource.
@@ -216,6 +207,11 @@ namespace kernel
          * Runtime kernel execution.
          */        
         Runtime runtime_;
+        
+        /**
+         * Kernel scheduler.
+         */
+        Scheduler scheduler_;        
         
     };
 }
