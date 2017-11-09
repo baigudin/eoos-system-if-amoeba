@@ -41,7 +41,7 @@ namespace kernel
             if( not ::kernel::Kernel::initialize() ) break;      
             // Stage complete
             stage = -1;
-            error = ::system::Main::main(Kernel::getKernel());      
+            error = ::system::Main::main(config, Kernel::getKernel());      
         }
         while(false);
         switch(stage)
