@@ -63,7 +63,7 @@ namespace kernel
      */
     ::api::Thread& Scheduler::getCurrentThread()
     {
-        ::api::Runtime& kernel = Kernel::getKernel().getRuntime();
+        ::api::Runtime& kernel = Kernel::call().getRuntime();
         if( not isConstructed_ ) kernel.terminate(-1);
         bool is = Interrupt::disableAll();
         ::api::Thread* thread = NULL;

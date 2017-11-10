@@ -8,6 +8,8 @@
 #ifndef KERNEL_RUNTIME_HPP_
 #define KERNEL_RUNTIME_HPP_
 
+#include "os.h"
+#include "mapi.h"
 #include "Object.hpp"
 #include "api.Runtime.hpp"
 #include "kernel.Interrupt.hpp"
@@ -43,7 +45,25 @@ namespace kernel
         virtual bool isConstructed() const
         {
             return isConstructed_;
-        }   
+        }
+        
+        /**
+         * Loads a program for executing.
+         *
+         * @param path a system path to a program.
+         * @return true if program has been loaded successfully.
+         */    
+        virtual bool load(const char* path)
+        {
+            if( not isConstructed_ ) return false;        
+            char name[32];
+            int32 error = sys_getname(name, sizeof(name));
+            if(error != OSE_OK) return false;
+            uint32 res = msg_discover(name, "os", TIMEOUT_MS);
+            if(res != RES_VOID) return false;
+            error = mapi_loadafterme(res, path, NULL );
+            return error == OSE_OK ? true : false;
+        }
   
         /**
          * Terminates a kernel execution.
@@ -57,7 +77,7 @@ namespace kernel
         }
         
     private:
-        
+    
         /** 
          * Constructor.
          *
@@ -83,6 +103,11 @@ namespace kernel
          * @return reference to this object.     
          */
         Runtime& operator =(const Runtime& obj);
+
+        /** 
+         * A timeout in ms.
+         */          
+        static const uint32 TIMEOUT_MS = 5000;
         
         /** 
          * The root object constructed flag.

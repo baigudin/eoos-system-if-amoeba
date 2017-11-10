@@ -15,7 +15,7 @@ namespace kernel
      *
      * @return a kernel factory.
      */      
-    ::api::Kernel& Kernel::getKernel()
+    ::api::Kernel& Kernel::call()
     {
         if( not isInitialized() ) while(true);
         return *kernel_;    

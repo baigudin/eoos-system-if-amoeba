@@ -23,7 +23,7 @@ namespace kernel
          *
          * @return the kernel factory.
          */      
-        static ::api::Kernel& getKernel();        
+        static ::api::Kernel& call();        
         
         /**
          * Initializes the resource.
