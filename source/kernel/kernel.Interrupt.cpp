@@ -55,25 +55,25 @@ namespace kernel
             void (*func)() = NULL;        
             for(int32 i=0; i<HANDLERS_NUMBER; i++)
             {
-              if(handler_[i] != NULL) continue;
-              switch(i)
-              {
-                case  0: func = handler00; break;
-                case  1: func = handler01; break;
-                case  2: func = handler02; break;
-                case  3: func = handler03; break;                              
-                case  4: func = handler04; break;
-                case  5: func = handler05; break;
-                case  6: func = handler06; break;
-                case  7: func = handler07; break;
-                case  8: func = handler08; break;
-                case  9: func = handler09; break;
-                case 10: func = handler10; break;
-                case 11: func = handler11; break;
-                default: continue;
-              }
-              index_ = i;
-              break;
+                if(handler_[i] != NULL) continue;
+                switch(i)
+                {
+                    case  0: func = handler00; break;
+                    case  1: func = handler01; break;
+                    case  2: func = handler02; break;
+                    case  3: func = handler03; break;                              
+                    case  4: func = handler04; break;
+                    case  5: func = handler05; break;
+                    case  6: func = handler06; break;
+                    case  7: func = handler07; break;
+                    case  8: func = handler08; break;
+                    case  9: func = handler09; break;
+                    case 10: func = handler10; break;
+                    case 11: func = handler11; break;
+                    default: continue;
+                }
+                index_ = i;
+                break;
             }
             if(func == NULL) break;
             res_ = int_alloc(source, func);
