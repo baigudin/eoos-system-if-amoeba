@@ -8,9 +8,8 @@
 #include "kernel.Main.hpp" 
 #include "kernel.Configuration.hpp"
 #include "kernel.Interrupt.hpp"
-#include "kernel.Kernel.hpp"
+#include "kernel.Resource.hpp"
 #include "Allocator.hpp"
-#include "Board.hpp"
 #include "system.Main.hpp" 
 
 namespace kernel
@@ -24,6 +23,7 @@ namespace kernel
     {
         int32 stage = 0;
         int32 error = -1;
+        kernel_ = NULL;
         const ::kernel::Configuration config = ::Configuration();
         do
         {
@@ -32,30 +32,51 @@ namespace kernel
             if( not ::Allocator::initialize(config) ) break;        
             // Stage 2
             stage++;
-            if( not ::Board::initialize(config) ) break;
-            // Stage 3
-            stage++;
             if( not ::kernel::Interrupt::initialize() ) break;  
-            // Stage 4
+            // Stage 3: Create the kernel resource factory
             stage++;
-            if( not ::kernel::Kernel::initialize() ) break;      
+            kernel_ = new Resource(config);
+            if(kernel_ == NULL || not kernel_->isConstructed()) break;   
             // Stage complete
             stage = -1;
-            error = ::system::Main::main(config, Kernel::call());      
+            error = ::system::Main::main(*kernel_);
         }
         while(false);
         switch(stage)
         {
             default:
-            case  4: ::kernel::Kernel::deinitialize();
-            case  3: ::kernel::Interrupt::deinitialize();            
-            case  2: ::Board::deinitialize();      
-            case  1: ::Allocator::deinitialize();      
-            case  0: break;
+            case 3:
+                delete kernel_;
+            
+            case 2: 
+                ::kernel::Interrupt::deinitialize();              
+                
+            case 1: 
+                ::Allocator::deinitialize();      
+                
+            case 0: 
+                break;
         } 
         return error;
     }
-}
+    
+    /**
+     * Returns the kernel factory resource.
+     *        
+     * @return the kernel interface.
+     */
+    ::api::Kernel& Main::getKernel()
+    {
+        if(kernel_ == NULL) Interrupt::disableAll();
+        return *kernel_;
+    }            
+    
+    /**
+     * The kernel factory resource (no boot).
+     */
+    ::api::Kernel* Main::kernel_;   
+
+}   
 
 /**
  * The main function.
@@ -75,7 +96,3 @@ int os_main(void* arg)
     return static_cast<int>( ::kernel::Main::main() );
 }
 
-/**
- * Pointer to constructed heap memory (no boot).
- */
-::api::Heap* ::Allocator::heap_;

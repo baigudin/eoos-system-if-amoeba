@@ -12,12 +12,8 @@ Config="Debug"
 Config="Release"
 
 [Source Files]
-Source="..\..\..\eoos\source\system\system.Interrupt.cpp"
 Source="..\..\..\eoos\source\system\system.Main.cpp"
-Source="..\..\..\eoos\source\system\system.Mutex.cpp"
-Source="..\..\..\eoos\source\system\system.Semaphore.cpp"
 Source="..\..\..\eoos\source\system\system.System.cpp"
-Source="..\..\..\eoos\source\system\system.Thread.cpp"
 Source="..\..\source\kernel\kernel.Interrupt.cpp"
 Source="..\..\source\kernel\kernel.Kernel.cpp"
 Source="..\..\source\kernel\kernel.Main.cpp"
