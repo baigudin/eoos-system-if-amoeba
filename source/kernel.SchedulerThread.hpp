@@ -9,7 +9,7 @@
 #define KERNEL_SCHEDULER_THREAD_HPP_
 
 #include "os.h"
-#include "Object.hpp"
+#include "kernel.Object.hpp"
 #include "api.Thread.hpp"
 #include "api.Task.hpp"
 #include "kernel.Semaphore.hpp"
@@ -17,9 +17,9 @@
 
 namespace kernel
 {      
-    class SchedulerThread : public ::Object<>, public ::api::Thread
+    class SchedulerThread : public ::kernel::Object, public ::api::Thread
     {
-        typedef ::Object<> Parent;
+        typedef ::kernel::Object Parent;
     
     public:
     

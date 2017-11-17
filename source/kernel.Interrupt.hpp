@@ -8,17 +8,15 @@
 #ifndef KERNEL_INTERRUPT_HPP_
 #define KERNEL_INTERRUPT_HPP_
 
-#include "Object.hpp"
+#include "kernel.Object.hpp"
 #include "api.Task.hpp"
 #include "api.Interrupt.hpp"
 
-namespace module { class Interrupt; }
-
 namespace kernel
 {
-    class Interrupt : public ::Object<>, public ::api::Interrupt
+    class Interrupt : public ::kernel::Object, public ::api::Interrupt
     {
-        typedef ::Object<> Parent;
+        typedef ::kernel::Object Parent;
   
     public:
         

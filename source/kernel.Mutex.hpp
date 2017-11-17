@@ -9,14 +9,14 @@
 #define KERNEL_MUTEX_HPP_
 
 #include "os.h"
-#include "Object.hpp"
+#include "kernel.Object.hpp"
 #include "api.Mutex.hpp"
 
 namespace kernel
 {  
-    class Mutex : public ::Object<>, public ::api::Mutex
+    class Mutex : public ::kernel::Object, public ::api::Mutex
     {
-        typedef ::Object<> Parent;    
+        typedef ::kernel::Object Parent;    
   
     public:
   

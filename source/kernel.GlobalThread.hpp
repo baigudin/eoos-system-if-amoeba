@@ -9,14 +9,14 @@
 #define KERNEL_GLOBAL_THREAD_HPP_
     
 #include "os.h"
-#include "Object.hpp"
+#include "kernel.Object.hpp"
 #include "api.Toggle.hpp"
 
 namespace kernel
 {
-    class GlobalThread : public ::Object<>, public ::api::Toggle
+    class GlobalThread : public ::kernel::Object, public ::api::Toggle
     {
-      typedef ::Object<> Parent;
+      typedef ::kernel::Object Parent;
     
     public:
       

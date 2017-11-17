@@ -8,7 +8,7 @@
 #ifndef KERNEL_RESOURCE_HPP_
 #define KERNEL_RESOURCE_HPP_
 
-#include "Object.hpp"
+#include "kernel.Object.hpp"
 #include "api.Kernel.hpp"
 #include "kernel.Runtime.hpp"
 #include "kernel.Time.hpp"
@@ -21,9 +21,9 @@
 
 namespace kernel
 {
-    class Resource : public ::Object<>, public ::api::Kernel
+    class Resource : public ::kernel::Object, public ::api::Kernel
     {
-        typedef ::Object<> Parent;
+        typedef ::kernel::Object Parent;
       
     public:
     
@@ -31,10 +31,12 @@ namespace kernel
          * Constructor.
          *
          * @param config the operating system configuration.  
+         * @param heap   constructed kernel heap memory.
          */    
-        Resource(const ::Configuration config) : Parent(),
+        Resource(const ::Configuration config, ::api::Heap& heap) : Parent(),
             isConstructed_ (getConstruct()),
             config_        (config),
+            heap_          (heap),            
             time_          (),
             global_        (),
             runtime_       (),
@@ -76,6 +78,16 @@ namespace kernel
         {
             return runtime_;
         }
+        
+        /**
+         * Returns a kernel constructed object.
+         *
+         * @return a kernel constructed object.
+         */
+        virtual ::api::Heap& getHeap()
+        {
+            return heap_;
+        }        
         
         /** 
          * Returns a value of the kernel running time in nanoseconds.
@@ -209,6 +221,11 @@ namespace kernel
          * The operating system configuration.
          */    
         const ::Configuration config_;
+        
+        /**
+         * Kernel heap memory.
+         */
+        ::api::Heap& heap_;        
         
         /**
          * Kernel time.

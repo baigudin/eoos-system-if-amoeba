@@ -9,15 +9,15 @@
 #define KERNEL_SEMAPHORE_HPP_
 
 #include "os.h"
-#include "Object.hpp"
+#include "kernel.Object.hpp"
 #include "api.Semaphore.hpp"
 #include "kernel.Interrupt.hpp"
 
 namespace kernel
 {
-    class Semaphore : public ::Object<>, public ::api::Semaphore
+    class Semaphore : public ::kernel::Object, public ::api::Semaphore
     {
-        typedef ::Object<> Parent;
+        typedef ::kernel::Object Parent;
 
     public:
 

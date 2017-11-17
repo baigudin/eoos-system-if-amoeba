@@ -9,14 +9,14 @@
 #define KERNEL_TIME_HPP_
 
 #include "os.h"
-#include "Object.hpp"
+#include "kernel.Object.hpp"
 #include "api.Value.hpp"
  
 namespace kernel
 {
-    class Time : public ::Object<>, public ::api::Value<int64>
+    class Time : public ::kernel::Object, public ::api::Value<int64>
     {
-        typedef ::Object<> Parent;
+        typedef ::kernel::Object Parent;
   
     public:
   

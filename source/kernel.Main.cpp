@@ -9,7 +9,8 @@
 #include "kernel.Configuration.hpp"
 #include "kernel.Interrupt.hpp"
 #include "kernel.Resource.hpp"
-#include "Allocator.hpp"
+#include "kernel.Allocator.hpp"
+#include "library.Heap.hpp"
 #include "system.Main.hpp" 
 
 namespace kernel
@@ -21,21 +22,27 @@ namespace kernel
      */   
     int32 Main::main()
     {
+        kernel_ = NULL;    
         int32 stage = 0;
         int32 error = -1;
-        kernel_ = NULL;
+        ::api::Heap* heap = NULL;        
         const ::kernel::Configuration config = ::Configuration();
         do
         {
-            // Stage 1
-            stage++;
-            if( not ::Allocator::initialize(config) ) break;        
+            // Stage 1: construct a heap object and set the kernel heap allocator
+            void* addr = config.heapAddr;
+            int64 size = config.heapSize;
+            if(addr == NULL || size <= 0) break;
+            heap = new (addr) ::library::Heap(size);
+            if(heap == NULL || not heap->isConstructed()) break;
+            ::kernel::Allocator::setHeap(*heap);       
             // Stage 2
             stage++;
             if( not ::kernel::Interrupt::initialize() ) break;  
             // Stage 3: Create the kernel resource factory
             stage++;
-            kernel_ = new Resource(config);
+            Resource kernel(config, *heap);            
+            kernel_ = &kernel;
             if(kernel_ == NULL || not kernel_->isConstructed()) break;   
             // Stage complete
             stage = -1;
@@ -46,13 +53,11 @@ namespace kernel
         {
             default:
             case 3:
-                delete kernel_;
             
             case 2: 
                 ::kernel::Interrupt::deinitialize();              
                 
             case 1: 
-                ::Allocator::deinitialize();      
                 
             case 0: 
                 break;

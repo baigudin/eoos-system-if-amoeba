@@ -9,14 +9,14 @@
 #define KERNEL_GLOBAL_INTERRUPT_HPP_
     
 #include "os.h"
-#include "Object.hpp"
+#include "kernel.Object.hpp"
 #include "api.Toggle.hpp"
 
 namespace kernel
 {
-    class GlobalInterrupt : public ::Object<>, public ::api::Toggle
+    class GlobalInterrupt : public ::kernel::Object, public ::api::Toggle
     {
-      typedef ::Object<> Parent;
+      typedef ::kernel::Object Parent;
     
     public:
       

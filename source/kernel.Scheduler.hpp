@@ -8,7 +8,7 @@
 #ifndef KERNEL_SCHEDULER_HPP_
 #define KERNEL_SCHEDULER_HPP_
 
-#include "Object.hpp"
+#include "kernel.Object.hpp"
 #include "api.Scheduler.hpp"
 #include "kernel.GlobalThread.hpp"
 #include "library.LinkedList.hpp"
@@ -17,9 +17,9 @@ namespace kernel
 {
     class SchedulerThread;
 
-    class Scheduler : public ::Object<>, public ::api::Scheduler
+    class Scheduler : public ::kernel::Object, public ::api::Scheduler
     {
-        typedef ::Object<> Parent;   
+        typedef ::kernel::Object Parent;   
   
     public:
   

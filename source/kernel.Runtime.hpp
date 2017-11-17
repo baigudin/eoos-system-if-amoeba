@@ -10,15 +10,15 @@
 
 #include "os.h"
 #include "mapi.h"
-#include "Object.hpp"
+#include "kernel.Object.hpp"
 #include "api.Runtime.hpp"
 #include "kernel.Interrupt.hpp"
 
 namespace kernel
 {
-    class Runtime : public ::Object<>, public ::api::Runtime
+    class Runtime : public ::kernel::Object, public ::api::Runtime
     {
-        typedef ::Object<> Parent;
+        typedef ::kernel::Object Parent;
       
     public:
     
