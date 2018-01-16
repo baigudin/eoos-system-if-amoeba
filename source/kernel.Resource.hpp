@@ -122,7 +122,7 @@ namespace kernel
         /** 
          * Creates new mutex resource.
          *
-         * @return new mutex resource, or NULL if error has been occurred.
+         * @return new mutex resource, or NULL if an error has been occurred.
          */      
         virtual ::api::Mutex* createMutex()
         {
@@ -137,7 +137,7 @@ namespace kernel
          * Creates new semaphore resource.
          *
          * @param permits the initial number of permits available.   
-         * @return new semaphore resource, or NULL if error has been occurred.
+         * @return new semaphore resource, or NULL if an error has been occurred.
          */      
         virtual ::api::Semaphore* createSemaphore(int32 permits)
         {
@@ -153,7 +153,7 @@ namespace kernel
          *
          * @param permits the initial number of permits available.      
          * @param isFair  true if this semaphore will guarantee FIFO granting of permits under contention.
-         * @return new semaphore resource, or NULL if error has been occurred.         
+         * @return new semaphore resource, or NULL if an error has been occurred.         
          */      
         virtual ::api::Semaphore* createSemaphore(int32 permits, bool isFair)
         {

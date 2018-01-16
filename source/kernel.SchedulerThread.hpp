@@ -117,7 +117,7 @@ namespace kernel
         /**
          * Returns the identifier of this thread.
          *
-         * @return the thread identifier, or -1 if error has been occurred.
+         * @return the thread identifier, or -1 if an error has been occurred.
          */
         virtual int64 getId() const
         {
@@ -127,7 +127,7 @@ namespace kernel
         /**
          * Returns this thread priority.
          *
-         * @return priority value, or -1 if error has been occurred.
+         * @return priority value, or -1 if an error has been occurred.
          */  
         virtual int32 getPriority() const
         {
