@@ -6,6 +6,7 @@
  * @license   http://embedded.team/license/
  */
 #include "system.Heap.hpp"
+#include "system.Allocator.hpp"
 #include "os.h"
 
 namespace local
@@ -47,7 +48,16 @@ namespace local
          */    
         void* Heap::allocate(size_t const size, void* const ptr)
         {
-            return heap_alloc(NULL, size, HEAP_ALIGN_8);
+            void* addr;
+            if(ptr == NULL)
+            {
+                addr = Allocator::allocate(size);
+            }
+            else
+            {
+                addr = ptr;
+            }
+            return addr;
         }
         
         /**
@@ -57,7 +67,7 @@ namespace local
          */      
         void Heap::free(void* const ptr)
         {
-            heap_free(NULL, ptr);
+            Allocator::free(ptr);
         }
     }
 }

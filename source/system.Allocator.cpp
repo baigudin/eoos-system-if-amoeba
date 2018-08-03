@@ -6,6 +6,7 @@
  * @license   http://embedded.team/license/
  */
 #include "system.Allocator.hpp"
+#include "os.h"
 
 namespace local
 {
@@ -14,12 +15,12 @@ namespace local
         /**
          * Allocates memory.
          *
-         * @param size number of bytes to allocate.
+         * @param size - number of bytes to allocate.
          * @return allocated memory address or a null pointer.
          */    
-        void* Allocator::allocate(const size_t)
+        void* Allocator::allocate(size_t const size)
         {
-            return NULL;
+            return heap_alloc(NULL, size, HEAP_ALIGN_8);
         }
         
         /**
@@ -27,8 +28,9 @@ namespace local
          *
          * @param ptr address of allocated memory block or a null pointer.
          */      
-        void Allocator::free(void* const)
+        void Allocator::free(void* const ptr)
         {
+            heap_free(NULL, ptr);
         }
         
     }

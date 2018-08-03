@@ -11,6 +11,9 @@
 #include "system.Object.hpp"
 #include "api.System.hpp"
 #include "system.Heap.hpp"
+#include "system.GlobalInterrupt.hpp"
+#include "system.Runtime.hpp"
+#include "system.Scheduler.hpp"
 #include "Error.hpp"
 
 namespace local
@@ -42,6 +45,13 @@ namespace local
             virtual bool isConstructed() const;
             
             /**
+             * Returns running time of the operating system in nanoseconds.
+             *
+             * @return time in nanoseconds.
+             */
+            virtual int64 getTime() const;
+            
+            /**
              * Returns the operating system heap memory.
              *
              * @return the heap memory.
@@ -49,12 +59,42 @@ namespace local
             virtual api::Heap& getHeap() const;
             
             /**
-             * Returns running time of the operating system in nanoseconds.
+             * Returns the system runtime environment.
              *
-             * @return time in nanoseconds.
+             * @return the system runtime environment.
              */
-            virtual int64 getTime() const;
-            
+            virtual api::Runtime& getRuntime() const;
+
+            /**
+             * Returns a global interrupt controller.
+             *
+             * @return a global interrupt controller.
+             */
+            virtual api::Toggle& getGlobalInterrupt() const;
+
+            /**
+             * Returns the kernel scheduler.
+             *
+             * @return the kernel scheduler.
+             */
+            virtual api::Scheduler& getScheduler() const;
+
+            /**
+             * Creates a new mutex resource.
+             *
+             * @return a new mutex resource, or NULL if an error has been occurred.
+             */
+            virtual api::Mutex* createMutex();
+
+            /**
+             * Creates a new semaphore resource.
+             *
+             * @param permits - the initial number of permits available.
+             * @param isFair  - true if this semaphore will guarantee FIFO granting of permits under contention.
+             * @return a new semaphore resource, or NULL if an error has been occurred.
+             */
+            virtual api::Semaphore* createSemaphore(int32 permits, bool isFair);
+
             /**
              * Creates a new interrupt resource.
              *
@@ -83,6 +123,13 @@ namespace local
              */      
             static api::System& call();
             
+            /**
+             * Terminates the operating system execution.
+             *
+             * @param error a termination status code.
+             */
+            static void terminate(Error error);
+
         private:
         
             /**
@@ -91,13 +138,26 @@ namespace local
              * @return true if object has been constructed successfully.     
              */    
             bool construct();
-            
+
             /**
-             * Terminates the operating system execution.
+             * Proves a resource.
              *
-             * @param error a termination status code.
+             * @param a resource.
+             * @return a passed resource, or NULL if the resource has not been approved.
              */
-            static void terminate(Error error);
+            template <class T>
+            static T* proveResource(T* res)
+            {
+                if(res != NULL)
+                {
+                    if( not res->isConstructed() )
+                    {
+                        delete res;
+                        res = NULL;
+                    }
+                }
+                return res;
+            }
             
             /**
              * Copy constructor.
@@ -123,6 +183,21 @@ namespace local
              * The operating system heap memory.
              */
             mutable system::Heap heap_;
+
+            /**
+             * The operating system global interrupt controller.
+             */
+            mutable system::GlobalInterrupt gi_;
+
+            /**
+             * The operating system runtime environment.
+             */
+            mutable system::Runtime runtime_;
+
+            /**
+             * The operating system scheduler.
+             */
+            mutable system::Scheduler scheduler_;
         
         };
     }
