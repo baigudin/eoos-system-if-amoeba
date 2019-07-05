@@ -1,6 +1,6 @@
-/** 
+/**
  * The operating system class.
- * 
+ *
  * @author    Sergey Baigudin, sergey@baigudin.software
  * @copyright 2014-2018, Embedded Team, Sergey Baigudin
  * @license   http://embedded.team/license/
@@ -16,19 +16,19 @@ namespace local
 {
     namespace system
     {
-        /** 
+        /**
          * Calls the operating system.
          *
          * @return the operating system syscall interface.
-         */         
+         */
         api::System& syscall()
         {
             return System::call();
-        }    
-    
-        /** 
+        }
+
+        /**
          * Constructor.
-         */    
+         */
         System::System() : Parent(),
             heap_      (),
             gi_        (),
@@ -37,24 +37,24 @@ namespace local
             bool const isConstructed = construct();
             setConstructed( isConstructed );
         }
-        
-        /** 
+
+        /**
          * Destructor.
          */
         System::~System()
         {
         }
-        
+
         /**
          * Tests if this object has been constructed.
          *
          * @return true if object has been constructed successfully.
-         */    
+         */
         bool System::isConstructed() const
         {
             return Parent::isConstructed();
         }
-        
+
         /**
          * Returns running time of the operating system in nanoseconds.
          *
@@ -78,8 +78,8 @@ namespace local
                 terminate(ERROR_SYSCALL_CALLED);
             }
             return heap_;
-        }    
-        
+        }
+
         /**
          * Returns the system runtime environment.
          *
@@ -168,7 +168,7 @@ namespace local
         {
             terminate(ERROR_USER_TERMINATION);
         }
-        
+
         /**
          * Executes the operating system.
          *
@@ -187,12 +187,12 @@ namespace local
             }
             return error;
         }
-    
-        /** 
+
+        /**
          * Returns the operating system syscall interface.
          *
          * @return the operating system syscall interface.
-         */   
+         */
         api::System& System::call()
         {
             if(system_ == NULL)
@@ -201,7 +201,7 @@ namespace local
             }
             return *system_;
         }
-        
+
         /**
          * Terminates the operating system execution.
          *
@@ -219,8 +219,8 @@ namespace local
         /**
          * Constructs this object.
          *
-         * @return true if object has been constructed successfully.     
-         */    
+         * @return true if object has been constructed successfully.
+         */
         bool System::construct()
         {
             bool res = Self::isConstructed();
@@ -255,13 +255,12 @@ namespace local
                 system_ = this;
                 break;
             }
-            return res;            
+            return res;
         }
-        
+
         /**
-         * The operatin system interface.
+         * The operating system interface.
          */
         api::System* System::system_ = NULL;
     }
 }
-
